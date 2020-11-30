@@ -1,0 +1,37 @@
+# # Animate ranked list of courses by number of bids
+# JD Linares
+# 30 Nov 2020
+
+
+library(tidyverse)
+library(gganimate)
+library(dplyr)
+
+
+bid_data <- read.csv("kelloggBids.full.csv")
+
+bid_data_course_merged <- aggregate(x=bid_data$Bids, by=list(course=bid_data$CourseTitle,phase=bid_data$Phase),FUN=sum)
+str(bid_data_course_merged) 
+
+
+
+
+bid_data_grouped <- group_by(bid_data_course_merged,phase)
+str(bid_data_grouped)
+
+data_sorted <- arrange(bid_data_grouped,-x)
+#data_sorted
+
+select_groups(data_sorted,1)
+
+#test_data <- filter(bid_data_course_merged_sorted,phase=='Winter 2021 Bidding Phase 1 ')
+#head(test_data)
+
+#
+#g <- ggplot(data=test_data,aes(x=reorder(course,x) , x)) +
+#  	geom_bar(stat="identity") + 
+#	coord_flip()
+#
+#ggsave("test.png",width=11,height=16)
+#
+#
